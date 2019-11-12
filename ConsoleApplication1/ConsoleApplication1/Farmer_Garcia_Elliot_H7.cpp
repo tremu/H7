@@ -33,8 +33,6 @@ public:
 	Computer(string ma, string mo);
 	~Computer();
 
-	void setManufacturer(string ma);
-	void setModel(string mo);
 	void displayComputer(void);
 
 };
@@ -49,7 +47,6 @@ public:
 	Desktop(string ma, string mo, int y);
 	~Desktop();
 
-	void setYear(int y);
 	void displayDesktop(void);
 
 };
@@ -64,7 +61,6 @@ public:
 	Laptop(string ma, string mo, float w);
 	~Laptop();
 
-	void setWeight(float w);
 	void displayLaptop(void);
 
 };
@@ -73,6 +69,64 @@ int main() {
 
 }
 
+Computer::Computer() {
+
+	manufacturer = "Apple";
+	model = "iComputer";
+
+}
+
+Computer::Computer(string ma, string mo) {
+
+	manufacturer = ma;
+	model = mo;
+
+}
+
 Computer::~Computer() {
+
+}
+
+void Computer::displayComputer() {
+
+	cout << manufacturer << " " << model;
+
+}
+
+Desktop::Desktop() {
+
+	year = 2019;
+
+}
+
+Desktop::Desktop(string ma, string mo, int y) : Computer(ma, mo) {
+
+	year = y;
+
+}
+
+void Desktop::displayDesktop(void) {
+
+	Computer::displayComputer();
+	cout << " (" << year << ")\n";
+
+}
+
+Laptop::Laptop() {
+	
+	weight = 1.1;
+
+}
+
+Laptop::Laptop(string ma, string mo, float w) : Computer(ma, mo) {
+
+	weight = w;
+
+}
+
+void Laptop::displayLaptop(void) {
+
+	Computer::displayComputer();
+	cout << "(" << weight << " lbs.)\n";
 
 }
