@@ -83,6 +83,14 @@ public:
 
 };
 
+Desktop defaultDesktop(void);
+Laptop defaultLaptop(void);
+Desktop customDesktop(void);
+Laptop customLaptop(void);
+void compareDesktops(Desktop d1, Desktop d2);
+void compareLaptops(Laptop l1, Laptop l2);
+
+
 //creates instances of Desktop and Laptop with default values, as well as
 //instances of Desktop and Laptop with user-set values, allowing the user to
 //visually compare them
@@ -91,62 +99,20 @@ int main() {
     cout << "This program allows you to visually compare stats for "
         "your computer against\nApple products.\n\n";
 
-    //default Desktop
-    Desktop D1;
-
-    //set D1 to 2019 Apple Mac Pro using mutator functions
-    D1.setManufacturer("Apple");
-    D1.setModel("Mac Pro");
-    D1.setYear(2019);
-
-    //default Laptop
-    Laptop L1;
-
-    //set L1 to Apple MacBook Pro weighing 4.0lbs using mutator functions
-    L1.setManufacturer("Apple");
-    L1.setModel("MacBook Pro");
-    L1.setWeight(4.0);
-
-    //values for custom Desktop and Laptop
-    string D2ma, D2mo, L2ma, L2mo;
-    int D2y;
-    float L2w;
-
-    //user set custom Desktop values
-    cout << "Please enter desktop manufacturer: ";
-    cin >> D2ma;
-    cout << "Please enter desktop model: ";
-    cin >> D2mo;
-    cout << "Please enter desktop year: ";
-    cin >> D2y;
-    cout << "\n";
+	//default desktop and laptop are created with default constructors
+	Desktop D1 = defaultDesktop();
+	Laptop L1 = defaultLaptop();
 
     //custom Desktop is created with overloaded constructor
-    Desktop D2(D2ma, D2mo, D2y);
- 
-    //user set custom Laptop values
-    cout << "Please enter laptop manufacturer: ";
-    cin >> L2ma;
-    cout << "Please enter laptop model: ";
-    cin >> L2mo;
-    cout << "Please enter laptop weight: ";
-    cin >> L2w;
-    cout << "\n";
+	Desktop D2 = customDesktop();
 
     //custom Laptop is created with overloaded constructor
-    Laptop L2(L2ma, L2mo, L2w);
+    Laptop L2 = customLaptop();
 
     //prints values for default and custom laptops and desktops, allowing
     //user to visually compare them
-    D1.displayDesktop();
-    cout << "vs.\n";
-    D2.displayDesktop();
-
-    cout << "\n";
-
-    L1.displayLaptop();
-    cout << "vs.\n";
-    L2.displayLaptop();
+	compareDesktops(D1, D2);
+	compareLaptops(L1, L2);
 
     return 0;
 
@@ -261,5 +227,88 @@ void Laptop::displayLaptop(void) {
 
 	Computer::displayComputer();
 	cout << " (" << weight << " lbs.)\n";
+
+}
+
+Desktop defaultDesktop() {
+
+	//default Desktop
+	Desktop D;
+
+	//set D1 to 2019 Apple Mac Pro using mutator functions
+	D.setManufacturer("Apple");
+	D.setModel("Mac Pro");
+	D.setYear(2019);
+
+	return D;
+
+}
+
+Laptop defaultLaptop() {
+
+	//default Laptop
+	Laptop L;
+
+	//set L1 to Apple MacBook Pro weighing 4.0lbs using mutator functions
+	L.setManufacturer("Apple");
+	L.setModel("MacBook Pro");
+	L.setWeight(4.0);
+
+	return L;
+
+}
+
+Desktop customDesktop(void) {
+	
+	//values for custom Desktop
+	string ma, mo;
+	int y;
+	
+	//user set custom Desktop values
+	cout << "Please enter desktop manufacturer: ";
+	cin >> ma;
+	cout << "Please enter desktop model: ";
+	cin >> mo;
+	cout << "Please enter desktop year: ";
+	cin >> y;
+	cout << "\n";
+
+	return Desktop(ma, mo, y);
+
+}
+
+Laptop customLaptop(void) {
+
+	string ma, mo;
+	float w;
+
+	//user set custom Laptop values
+	cout << "Please enter laptop manufacturer: ";
+	cin >> ma;
+	cout << "Please enter laptop model: ";
+	cin >> mo;
+	cout << "Please enter laptop weight: ";
+	cin >> w;
+	cout << "\n";
+
+	return Laptop(ma, mo, w);
+
+}
+
+void compareDesktops(Desktop d1, Desktop d2) {
+
+	d1.displayDesktop();
+	cout << "vs.\n";
+	d2.displayDesktop();
+	cout << "\n";
+
+}
+
+void compareLaptops(Laptop l1, Laptop l2) {
+
+	l1.displayLaptop();
+	cout << "vs.\n";
+	l2.displayLaptop();
+	cout << "\n";
 
 }
