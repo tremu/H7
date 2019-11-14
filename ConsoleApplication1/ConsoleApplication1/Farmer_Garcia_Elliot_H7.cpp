@@ -83,12 +83,14 @@ public:
 
 };
 
+void help(void);
 Desktop defaultDesktop(void);
 Laptop defaultLaptop(void);
 Desktop customDesktop(void);
 Laptop customLaptop(void);
-void compareDesktops(Desktop d1, Desktop d2);
-void compareLaptops(Laptop l1, Laptop l2);
+void compareDesktops(void);
+void compareLaptops(void);
+int quit(void);
 
 
 //creates instances of Desktop and Laptop with default values, as well as
@@ -96,25 +98,58 @@ void compareLaptops(Laptop l1, Laptop l2);
 //visually compare them
 int main() {
 
-    cout << "This program allows you to visually compare stats for "
-        "your computer against\nApple products.\n\n";
+	cout << "This program allows you to visually compare stats for "
+		"your computer against\nApple products.\n\n";
 
-	//default desktop and laptop are created with default constructors
-	Desktop D1 = defaultDesktop();
-	Laptop L1 = defaultLaptop();
+	//variable set by user to call the desired operation
+	char op;
 
-    //custom Desktop is created with overloaded constructor
-	Desktop D2 = customDesktop();
+	//strings for menu handling
+	string menu = "\t\tHelp\t\tDesktop\t\tLaptop\t\tQuit\n\n";
+	string prompt = "Please enter the initial of your desired operation: ";
+	string inv = "Invalid selection.\n";
 
-    //custom Laptop is created with overloaded constructor
-    Laptop L2 = customLaptop();
+	//loop runs until 'q' or 'Q' is selected
+	while (true) {
 
-    //prints values for default and custom laptops and desktops, allowing
-    //user to visually compare them
-	compareDesktops(D1, D2);
-	compareLaptops(L1, L2);
+		//prints menu and asks user for menu selection
+		cout << menu;
+		cout << prompt;
+		cin >> op;
+		cout << "\n";
 
-    return 0;
+		//menu selection is evaluated
+		switch (op) {
+
+			//help has been selected
+		case 'h':
+		case 'H':
+			help();
+			break;
+
+			//smallest() has been selected
+		case 'd':
+		case 'D':
+			compareDesktops();
+			break;
+
+			//smallest() has been selected
+		case 'l':
+		case 'L':
+			compareLaptops();
+			break;
+
+			//quit program has been selected
+		case 'q':
+		case 'Q':
+			return 0;       //exits program
+
+		default:
+			cout << inv;
+
+		}
+
+	}
 
 }
 
@@ -230,12 +265,18 @@ void Laptop::displayLaptop(void) {
 
 }
 
+void help(void) {
+
+}
+
+//creates Desktop using default constructor, and assigns hardcoded values
+//for the user to compare their Desktop against
 Desktop defaultDesktop() {
 
-	//default Desktop
+	//default Desktop constructor
 	Desktop D;
 
-	//set D1 to 2019 Apple Mac Pro using mutator functions
+	//set D to 2019 Apple Mac Pro using mutator functions
 	D.setManufacturer("Apple");
 	D.setModel("Mac Pro");
 	D.setYear(2019);
@@ -244,12 +285,14 @@ Desktop defaultDesktop() {
 
 }
 
+//creates Laptop using default constructor, and assigns hardcoded values
+//for the user to compare their Laptop against
 Laptop defaultLaptop() {
 
 	//default Laptop
 	Laptop L;
 
-	//set L1 to Apple MacBook Pro weighing 4.0lbs using mutator functions
+	//set L to Apple MacBook Pro weighing 4.0lbs using mutator functions
 	L.setManufacturer("Apple");
 	L.setModel("MacBook Pro");
 	L.setWeight(4.0);
@@ -295,20 +338,64 @@ Laptop customLaptop(void) {
 
 }
 
-void compareDesktops(Desktop d1, Desktop d2) {
+//prints values for default and custom desktops, allowing user to visually
+//compare them
+void compareDesktops(void) {
 
-	d1.displayDesktop();
+	//default Desktop is created with default constructor
+	Desktop D1 = defaultDesktop();
+
+	//custom Desktop is created with overloaded constructor
+	Desktop D2 = customDesktop();
+
+	D1.displayDesktop();
 	cout << "vs.\n";
-	d2.displayDesktop();
+	D2.displayDesktop();
 	cout << "\n";
 
 }
 
-void compareLaptops(Laptop l1, Laptop l2) {
+//prints values for default and custom desktops, allowing user to visually
+//compare them
+void compareLaptops(void) {
 
-	l1.displayLaptop();
+	//default Laptop is created with default constructor
+	Laptop L1 = defaultLaptop();
+
+	//custom Laptop is created with overloaded constructor
+	Laptop L2 = customLaptop();
+
+	L1.displayLaptop();
 	cout << "vs.\n";
-	l2.displayLaptop();
+	L2.displayLaptop();
 	cout << "\n";
+
+}
+
+int quit(void) {
+
+	char c;
+
+	while (true) {
+
+		cout << "Quit? y/n: ";
+		cin >> c;
+		switch (c) {
+
+		case 'y':
+		case 'Y':
+			return 0;
+			break;
+
+		case 'n':
+		case 'N':
+			return 1;
+			break;
+
+		default:
+			continue;
+		}
+
+	}
 
 }
