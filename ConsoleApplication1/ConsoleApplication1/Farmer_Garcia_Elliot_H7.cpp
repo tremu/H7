@@ -41,13 +41,13 @@ class Computer {
 
 public:
 
-	Computer();
-	Computer(string ma, string mo);
-	~Computer();
+	Computer();                                 //default constructor
+	Computer(string ma, string mo);             //overloaded constructor
+	~Computer();                                //destructor
 
-    void setManufacturer(string ma);
-    void setModel(string mo);
-	void displayComputer(void);
+    void setManufacturer(string ma);            //mutator
+    void setModel(string mo);                   //mutator
+	void displayComputer(void);                 //accessor
 
 };
 
@@ -58,12 +58,12 @@ class Desktop : public Computer {
 
 public:
 
-	Desktop();
-	Desktop(string ma, string mo, int y);
-	~Desktop();
+	Desktop();                                  //default constructor
+	Desktop(string ma, string mo, int y);       //overloaded constructor
+	~Desktop();                                 //destructor
 
-    void setYear(int y);
-	void displayDesktop(void);
+    void setYear(int y);                        //mutator
+	void displayDesktop(void);                  //accessor
 
 };
 
@@ -74,12 +74,12 @@ class Laptop : public Computer {
 
 public:
 
-	Laptop();
-	Laptop(string ma, string mo, float w);
-	~Laptop();
+	Laptop();                                   //default constructor
+	Laptop(string ma, string mo, float w);      //overloaded constructor
+	~Laptop();                                  //destructor
 
-    void setWeight(float w);
-	void displayLaptop(void);
+    void setWeight(float w);                    //mutator
+	void displayLaptop(void);                   //accessor
 
 };
 
@@ -151,7 +151,6 @@ int main() {
     return 0;
 
 }
-
 
 //default Computer constructor
 Computer::Computer() {
