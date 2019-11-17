@@ -4,7 +4,7 @@ Programmer          : Elliot Farmer Garcia
 Course / Section    : ELET 2300 - 07 / 23493
 Instructor          : Dr. F. Attarzadeh
 Date Assigned       : 11/12/2019
-Date Modified       : 11/12/2019
+Date Modified       : 11/17/2019
 Due Date            : 11/21/2019
 Compiler            : Microsoft Visual Studio Enterprise 2019
 Environment         : Console Applications
@@ -14,21 +14,21 @@ Operating System    : Windows 7
 /*
 Problem Statement
 
-This program allows the user to compare their desktop or laptop computer to
-an Apple desktop or laptop computer. The manufacturer, model, and year are
-compared for desktops, and the manufacturer, model, and weight are compared
-for laptops.
+This menu-driven program allows the user to compare their desktop or laptop
+computer to an Apple desktop or laptop computer. The manufacturer, model, and
+year are compared for desktops, and the manufacturer, model, and weight are
+compared for laptops.
 
-Questions:
-1. Program model?
-2. D1 and L1 - overloaded constructors or mutators?
-3. destructors - blank?
-4. accessors with return type void - still accessors?
-5. displayComputer() - member function of class Computer y/n?
+Enter (d) or (D) to compare desktops, or (l) or (L) to compare laptops.
+
+(h) or (H) prints the help menu. (q) or (Q) to quit.
+
+Output is aligned to the default Windows 7 terminal size, 80x25.
 
 */
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 
 using namespace std;
@@ -88,26 +88,30 @@ Desktop defaultDesktop(void);
 Laptop defaultLaptop(void);
 Desktop customDesktop(void);
 Laptop customLaptop(void);
-void compareDesktops(void);
-void compareLaptops(void);
-int quit(void);
+void compareDesktops(Desktop D1);
+void compareLaptops(Laptop L1);
 
 
-//creates instances of Desktop and Laptop with default values, as well as
-//instances of Desktop and Laptop with user-set values, allowing the user to
-//visually compare them
+//main creates instances of Desktop and Laptop with default values, and
+//handles menu operations. The default computers are then sent to either
+//compareDesktops() and compareLaptops() upon menu request.
 int main() {
-
-	cout << "This program allows you to visually compare stats for "
-		"your computer against\nApple products.\n\n";
 
 	//variable set by user to call the desired operation
 	char op;
 
 	//strings for menu handling
-	string menu = "\t\tHelp\t\tDesktop\t\tLaptop\t\tQuit\n\n";
+    string header = "This program allows you to visually compare stats for "
+        "your computer against\nApple products.\n";
+	string menu = "\n\t\tHelp\t\tDesktop\t\tLaptop\t\tQuit\n\n";
 	string prompt = "Please enter the initial of your desired operation: ";
 	string inv = "Invalid selection.\n";
+
+    //default computers are created with default constructors
+    Desktop D1 = defaultDesktop();
+    Laptop L1 = defaultLaptop();
+
+    cout << header;
 
 	//loop runs until 'q' or 'Q' is selected
 	while (true) {
@@ -121,29 +125,30 @@ int main() {
 		//menu selection is evaluated
 		switch (op) {
 
-			//help has been selected
+		//help has been selected
 		case 'h':
 		case 'H':
 			help();
 			break;
 
-			//smallest() has been selected
+		//desktop has been selected
 		case 'd':
 		case 'D':
-			compareDesktops();
+			compareDesktops(D1);
 			break;
 
-			//smallest() has been selected
+		//laptop has been selected
 		case 'l':
 		case 'L':
-			compareLaptops();
+			compareLaptops(L1);
 			break;
 
-			//quit program has been selected
+		//quit program has been selected
 		case 'q':
 		case 'Q':
 			return 0;       //exits program
-
+        
+        //invalid menu selection, menu repeats
 		default:
 			cout << inv;
 
@@ -225,7 +230,10 @@ void Desktop::setYear(int y) {
 //accessor function - prints manufacturer, model, and year of Desktop
 void Desktop::displayDesktop(void) {
 
+    //prints manufacturer and model using inherited displayComputer()
 	Computer::displayComputer();
+
+    //prints year
 	cout << " (" << year << " edition)\n";
 
 }
@@ -260,12 +268,30 @@ void Laptop::setWeight(float w) {
 //accessor function - prints Laptop manufacturer, model, and weight
 void Laptop::displayLaptop(void) {
 
+    //prints manufacturer and model using inherited displayComputer()
 	Computer::displayComputer();
-	cout << " (" << weight << " lbs.)\n";
+
+    //prints weight
+	cout << " (" << fixed << setprecision(1) << weight << " lbs.)\n";
 
 }
 
 void help(void) {
+
+    string help = "This program helps the user visually compare their "
+        "computer to the latest\ncomputers by Apple.\n\n"
+
+        "Entering 'd' or 'D' will allow the user to compare desktops. The "
+        "user will\nsubsequently be asked to enter the manufacturer and "
+        "model name, as well as the\nmodel year (int).\n\n"
+
+        "Entering 'l' or 'L' will allow the user to compare laptops. The "
+        "user will\nsubsequently be asked to enter the manufacturer and "
+        "model name, as well as the\nmodel weight (float).\n\n"
+
+        "Entering 'q' or 'Q' will quit the program.\n\n";
+
+    cout << help;
 
 }
 
@@ -301,38 +327,48 @@ Laptop defaultLaptop() {
 
 }
 
+//prompts user for values to create a custom desktop
 Desktop customDesktop(void) {
 	
 	//values for custom Desktop
 	string ma, mo;
 	int y;
+
+    cin.ignore(); //clear input buffer
 	
 	//user set custom Desktop values
 	cout << "Please enter desktop manufacturer: ";
-	cin >> ma;
+    getline(cin, ma);   //include potential spaces
+
 	cout << "Please enter desktop model: ";
-	cin >> mo;
+    getline(cin, mo);
+
 	cout << "Please enter desktop year: ";
 	cin >> y;
-	cout << "\n";
 
 	return Desktop(ma, mo, y);
 
 }
 
+
+//prompts user for values to create a custom laptop
 Laptop customLaptop(void) {
 
+    //values for custom Laptop
 	string ma, mo;
 	float w;
 
+    cin.ignore(); //clear input buffer
+
 	//user set custom Laptop values
 	cout << "Please enter laptop manufacturer: ";
-	cin >> ma;
+    getline(cin, ma);
+
 	cout << "Please enter laptop model: ";
-	cin >> mo;
-	cout << "Please enter laptop weight: ";
+    getline(cin, mo);
+
+	cout << "Please enter laptop weight in pounds: ";
 	cin >> w;
-	cout << "\n";
 
 	return Laptop(ma, mo, w);
 
@@ -340,62 +376,34 @@ Laptop customLaptop(void) {
 
 //prints values for default and custom desktops, allowing user to visually
 //compare them
-void compareDesktops(void) {
+void compareDesktops(Desktop D1) {
 
-	//default Desktop is created with default constructor
-	Desktop D1 = defaultDesktop();
-
-	//custom Desktop is created with overloaded constructor
+	//custom Desktop D2 is created with overloaded constructor
 	Desktop D2 = customDesktop();
 
+    cout << "\n";
 	D1.displayDesktop();
 	cout << "vs.\n";
 	D2.displayDesktop();
 	cout << "\n";
 
+    system("pause");    //waits for the user to press a key before continuing
+
 }
 
 //prints values for default and custom desktops, allowing user to visually
 //compare them
-void compareLaptops(void) {
+void compareLaptops(Laptop L1) {
 
-	//default Laptop is created with default constructor
-	Laptop L1 = defaultLaptop();
-
-	//custom Laptop is created with overloaded constructor
+	//custom Laptop L2 is created with overloaded constructor
 	Laptop L2 = customLaptop();
 
+    cout << "\n";
 	L1.displayLaptop();
 	cout << "vs.\n";
 	L2.displayLaptop();
 	cout << "\n";
 
-}
-
-int quit(void) {
-
-	char c;
-
-	while (true) {
-
-		cout << "Quit? y/n: ";
-		cin >> c;
-		switch (c) {
-
-		case 'y':
-		case 'Y':
-			return 0;
-			break;
-
-		case 'n':
-		case 'N':
-			return 1;
-			break;
-
-		default:
-			continue;
-		}
-
-	}
+    system("pause");    //waits for the user to press a key before continuing
 
 }
