@@ -4,7 +4,7 @@ Programmer          : Elliot Farmer Garcia
 Course / Section    : ELET 2300 - 07 / 23493
 Instructor          : Dr. F. Attarzadeh
 Date Assigned       : 11/12/2019
-Date Modified       : 11/17/2019
+Date Modified       : 11/21/2019
 Due Date            : 11/21/2019
 Compiler            : Microsoft Visual Studio Enterprise 2019
 Environment         : Console Applications
@@ -12,6 +12,7 @@ Operating System    : Windows 7
 */
 
 /*
+
 Problem Statement
 
 This menu-driven program allows the user to compare their desktop or laptop
@@ -88,8 +89,8 @@ Desktop defaultDesktop(void);
 Laptop defaultLaptop(void);
 Desktop customDesktop(void);
 Laptop customLaptop(void);
-void compareDesktops(Desktop D1);
-void compareLaptops(Laptop L1);
+void compareDesktops(Desktop& D1);
+void compareLaptops(Laptop& L1);
 
 
 //main creates instances of Desktop and Laptop with default values, and
@@ -376,7 +377,7 @@ Laptop customLaptop(void) {
 
 //prints values for default and custom desktops, allowing user to visually
 //compare them
-void compareDesktops(Desktop D1) {
+void compareDesktops(Desktop& D1) {
 
 	//custom Desktop D2 is created with overloaded constructor
 	Desktop D2 = customDesktop();
@@ -393,7 +394,7 @@ void compareDesktops(Desktop D1) {
 
 //prints values for default and custom desktops, allowing user to visually
 //compare them
-void compareLaptops(Laptop L1) {
+void compareLaptops(Laptop& L1) {
 
 	//custom Laptop L2 is created with overloaded constructor
 	Laptop L2 = customLaptop();
